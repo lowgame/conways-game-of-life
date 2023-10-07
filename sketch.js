@@ -26,6 +26,10 @@ function setup() {
     }
   }
 
+  let canvas = select("canvas");
+
+  canvas.mouseMoved(drawing);
+
   let startButton = select("#startButton");
   startButton.mousePressed(startDrawing);
   let stopButton = select("#stopButton");
@@ -106,6 +110,8 @@ function mousePressed() {
   let i = floor(mouseX / resolution);
   let j = floor(mouseY / resolution);
 
+  isDrawing = true;
+
   if (i >= 0 && i < cols && j >= 0 && j < rows) {
     grid[i][j] = 1 - grid[i][j];
   }
@@ -142,3 +148,20 @@ document.addEventListener("DOMContentLoaded", function () {
     fps = parseInt(slider.value);
   });
 });
+
+// FOR MULTIPLE LIVING CELLS ON HOLDING MOUSE BUTTON
+
+function mouseReleased() {
+  isDrawing = false;
+}
+
+function drawing() {
+  if (isDrawing) {
+    let i = floor(mouseX / resolution);
+    let j = floor(mouseY / resolution);
+
+    if (i >= 0 && i < cols && j >= 0 && j < rows) {
+      grid[i][j] = 1;
+    }
+  }
+}
