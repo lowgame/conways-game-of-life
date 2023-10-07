@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+  <script src="sketch.js"></script>
+  <style>
+    body {
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    asd canvas {
+      border: 2px solid #666;
+    }
+
+    button {
+      margin-bottom: 1rem;
+    }
+
+    #gridContainer {
+      width: 100%;
+      justify-content: center;
+      display: flex;
+    }
+
+    #information {
+      max-width: 800px;
+      margin: 0 1rem 1rem 1rem;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    button {
+      display: inline-block;
+      text-align: center;
+      padding: 0px;
+      outline: 0;
+      border: 0;
+      cursor: pointer;
+      border-radius: 16px;
+      padding: 14px 24px 16px;
+      font-size: 1rem;
+      font-weight: 700;
+      transition: 400ms;
+      background: transparent;
+      color: #666;
+      box-shadow: 0 0 0 1px #666 inset;
+    }
+
+    button:hover {
+      background-color: #666;
+      color: white;
+    }
+
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    h4 {
+      color: #333;
+    }
+
+    p,
+    li {
+      font-size: 16px;
+      line-height: 1.6;
+      color: #666;
+    }
+
+    footer {
+      margin-top: 3rem;
+      color: #666;
+    }
+
+    .slidecontainer {
+      display: flex;
+      align-items: center;
+      width: 50%;
+    }
+
+    label {
+      width: 25%;
+    }
+
+    .slider {
+      width: 100%;
+      height: 25px;
+      background: #d3d3d3;
+      outline: none;
+      opacity: 0.7;
+      -webkit-transition: .2s;
+      transition: opacity .2s;
+    }
+
+    .slider:hover {
+      opacity: 1;
+    }
+  </style>
+</head>
+
+<body>
+
+  <p>
+
+  </p>
+  <div id="information">
+    <h1>Conway's Game of Life</h1>
+    <p>Conway'nin Yaşam Oyunu (Conway's Game of Life), matematikçi John Horton Conway
+      tarafından 1970 yılında geliştirilen bir hücresel otomata oyunudur.
+      Bu oyun, basit kurallara dayanan bir evren içindeki hücrelerin evrimini modellemek için
+      kullanılır ve sadece bu basit kuralların kombinasyonları ile karmaşık ve ilginç davranışlar
+      sergiler. Yaşam Oyunu, bilim insanları, matematikçiler ve bilgisayar programcıları için
+      birçok farklı uygulama alanında ilham kaynağı olmuştur.</p>
+
+    <p>Yaşam Oyunu, bir düşünce deneyi olarak başladı ve temelde iki boyutlu bir evrende
+      bulunan hücrelerin yaşama, ölme ve çoğalma kurallarına dayanır. Her bir hücre, bir
+      sonraki jenerasyonda komşu hücrelerin durumuna bağlı olarak belirli bir kurallar
+      setine göre değişir.</p>
+
+    <p>
+    <h4>Oyunun kuralları şunlardır:</h4>
+
+    <ol>
+      <li>Her bir hücrenin etrafında sekiz komşusu vardır.</li>
+      <li>Bir hücrenin yaşaması veya ölmesi, bu hücrenin kendisi ve etrafındaki komşularının durumlarına bağlıdır.</li>
+      <li>Eğer bir hücrenin etrafındaki tam olarak üç komşusu canlı ise, hücre bir sonraki jenerasyonda doğar veya
+        hayatta kalır.</li>
+      <li>Eğer bir hücrenin etrafındaki komşu sayısı iki veya daha az veya dört veya daha fazla ise, hücre bir sonraki
+        jenerasyonda ölür.</li>
+    </ol>
+    </p>
+
+    <p>Bu basit kuralların kombinasyonları, çok çeşitli kalıpların ve davranışların ortaya
+      çıkmasına olanak tanır. Yaşam Oyunu, bilim insanları tarafından karmaşık sistemlerin
+      modellemesi ve analizi için bir araç olarak kullanılmıştır.</p>
+
+    <p>
+      Oyun sonsuz iki boyutlu düzlemde oynanmak için tasarlanmıştır ancak bu teorik olarak imkansızdır çünkü
+      işlemcilerin gücü sonsuz değildir. Bunun yerine repeated gridler ya da kapalı üç boyutlu nesnelerin
+      yüzeyinde oynamak daha mantıklıdır. Aşağıdaki oyunda da kapalı bir yüzeyde oyun modellenmiştir. En Aşağı
+      giden hücre en yukarıda tekrar ortaya çıkacaktır.
+    </p>
+
+    <p>Yaşam Oyunu'nun tarihsel gelişimi, John Conway tarafından yaratılmasına dayanır.
+      Oyunun ilk kez 1970 yılında yayınlanmasıyla matematiksel bir fenomen haline geldi.</p>
+
+  </div>
+  <div class="buttons">
+    <button id="startButton">Start</button>
+    <button id="stopButton">Stop</button>
+    <button id="resetButton">Reset</button>
+  </div>
+  <div id="gridContainer"></div>
+  <div id="stats">
+    generation: 0
+  </div>
+  <div class="slidecontainer">
+    <label for="fps-slider">FPS: <span id="fps-value">15</span></label>
+    <input type="range" class="slider" id="fps-slider" min="1" max="30" step="1" value="15">
+  </div>
+  <footer>
+    Ahmet Kamer ÇİVİ
+    <br>
+    X:
+    <a href="https://www.x.com/planckmech">
+      @planckmech
+    </a>
+  </footer>
+
+</body>
+
+</html>
