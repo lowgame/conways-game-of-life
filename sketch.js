@@ -107,13 +107,15 @@ function countNeighbors(grid, x, y) {
 
 // GRID COLORING WITH MOUSE
 function mousePressed() {
-  let i = floor(mouseX / resolution);
-  let j = floor(mouseY / resolution);
+  if (!isAnimating) {
+    let i = floor(mouseX / resolution);
+    let j = floor(mouseY / resolution);
 
-  isDrawing = true;
+    isDrawing = true;
 
-  if (i >= 0 && i < cols && j >= 0 && j < rows) {
-    grid[i][j] = 1 - grid[i][j];
+    if (i >= 0 && i < cols && j >= 0 && j < rows) {
+      grid[i][j] = 1 - grid[i][j];
+    }
   }
 }
 
@@ -156,7 +158,7 @@ function mouseReleased() {
 }
 
 function drawing() {
-  if (isDrawing) {
+  if (isDrawing && !isAnimating) {
     let i = floor(mouseX / resolution);
     let j = floor(mouseY / resolution);
 
